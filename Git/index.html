@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Treinamento de TI Wish Foz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Zilla+Slab:wght@600;700&display=swap">
+<style>
+
+  :root{
+    --ink:#1E1E1C; --ink-soft:#55564F; --paper:#F8F7F4; --surface:#FFFFFF; --line:#D9D8CF;
+    --accent:#18787B; --accent-ink:#FFFFFF; --accent-soft:#E1EEED; --danger:#A93226; --danger-soft:#FBE9E7;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#F1F0EA; --ink-soft:#B9BAB0; --paper:#15201F; --surface:#1B2726; --line:#34443F;
+      --accent:#3FB4AE; --accent-ink:#0A1615; --accent-soft:#1C3432; --danger:#F0877B; --danger-soft:#3A2220;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#F1F0EA; --ink-soft:#B9BAB0; --paper:#15201F; --surface:#1B2726; --line:#34443F;
+    --accent:#3FB4AE; --accent-ink:#0A1615; --accent-soft:#1C3432; --danger:#F0877B; --danger-soft:#3A2220;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Work Sans",ui-sans-serif,system-ui,sans-serif;font-size:18px;line-height:1.55;padding:0 20px;}
+  .wrap{max-width:980px;margin:0 auto;padding-block:20px 64px;}
+  h1,h2,h3{margin:0;text-wrap:balance;}
+  button,input,select{font:inherit;color:inherit;}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+
+  /* ---------- masthead (fixed brand panel) ---------- */
+  .mast{position:relative;overflow:hidden;isolation:isolate;background:#272724;border-radius:20px;padding:30px clamp(22px,5vw,52px) 38px;}
+  .mast::after{content:"";position:absolute;inset:0;z-index:-1;background:url(img/cover_stars.svg) no-repeat right center/auto 125%;}
+  .brand{display:flex;align-items:center;gap:14px;margin-bottom:26px;}
+  .brand img{height:19px;width:auto;display:block;}
+  .brand i{width:1px;height:20px;background:rgba(255,255,255,.3);}
+  .brand span{font-family:"Zilla Slab",serif;font-weight:700;font-size:16px;color:#F3F2ED;}
+  .mast h1{font-size:clamp(30px,5vw,48px);line-height:1.1;color:#FBFAF7;font-weight:700;max-width:12ch;}
+  .mast p{margin:14px 0 0;font-size:20px;color:#D2D1C8;max-width:30ch;}
+  @media (max-width:720px){
+    .mast{padding-bottom:128px;}
+    .mast::after{background-position:right bottom;background-size:100% 110px;}
+  }
+
+  /* ---------- tabs (coordination only) ---------- */
+  .tabs{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+  .tab{border:2px solid var(--line);background:var(--surface);border-radius:100px;padding:8px 20px;font-weight:600;font-size:16px;cursor:pointer;}
+  .tab[aria-current="page"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);}
+
+  /* ---------- buttons ---------- */
+  .btn{min-height:58px;padding:0 28px;border-radius:14px;border:2px solid var(--accent);background:transparent;color:var(--accent);font-weight:700;font-size:20px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;}
+  .btn.primary{background:var(--accent);color:var(--accent-ink);}
+  .btn:disabled{opacity:.45;cursor:default;}
+  .btn:not(:disabled):hover{filter:brightness(1.06);}
+  .btn.small{min-height:44px;padding:0 16px;font-size:16px;}
+  .btn svg{flex:none;}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+  .stage :focus-visible{outline-color:#18787B;}
+
+  main{margin-top:26px;}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(20px,4vw,36px);}
+  .card h2{font-size:clamp(26px,4vw,34px);font-weight:700;}
+  .lead{margin:8px 0 22px;color:var(--ink-soft);font-size:20px;}
+
+  /* ---------- form ---------- */
+  .form-card{max-width:640px;margin-inline:auto;}
+  .field{margin-bottom:20px;}
+  .field label{display:block;font-weight:600;font-size:20px;margin-bottom:6px;}
+  .field input,.field select{width:100%;min-height:58px;padding:12px 16px;font-size:20px;border:2px solid var(--line);border-radius:12px;background:var(--paper);}
+  .field input:focus,.field select:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft);}
+  .err{margin:6px 0 0;color:var(--danger);font-weight:600;font-size:17px;min-height:0;}
+  .err:empty{display:none;}
+  .notice{font-size:16px;color:var(--ink-soft);background:var(--accent-soft);border-radius:12px;padding:12px 16px;margin:4px 0 22px;}
+  .form-error{background:var(--danger-soft);border-radius:12px;padding:12px 16px;margin:0 0 18px;}
+
+  /* ---------- lesson ---------- */
+  .meta{display:flex;align-items:center;gap:16px;margin-bottom:14px;font-weight:600;font-size:17px;color:var(--ink-soft);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .bar{flex:1;height:12px;border-radius:100px;background:var(--line);overflow:hidden;}
+  .bar i{display:block;height:100%;background:var(--accent);border-radius:100px;transition:width .25s;}
+  @media (prefers-reduced-motion: reduce){.bar i{transition:none;}}
+  .controls{display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap;margin-top:20px;}
+  .controls .mid{flex:1;display:flex;justify-content:center;}
+  @media (max-width:560px){.controls .btn{flex:1 1 100%;} .controls .mid{order:3;flex:1 1 100%;} .controls .mid .btn{flex:1 1 100%;}}
+
+  /* stage = fixed light "slide", same in light and dark pages */
+  .stage{position:relative;background:#FFFFFF;color:#1E1E1C;border:1px solid #D9DDD8;border-radius:20px;padding:clamp(20px,4vw,40px);text-align:center;min-height:380px;display:flex;flex-direction:column;justify-content:center;}
+  .stage .t{font-size:clamp(28px,4.6vw,42px);line-height:1.15;font-weight:700;margin:14px auto 0;outline:none;}
+  .stage .sub{font-size:clamp(20px,2.8vw,25px);color:#4A4B45;margin:12px auto 0;max-width:36ch;}
+  .badge{position:absolute;left:18px;top:18px;width:58px;height:58px;border-radius:50%;background:#18787B;color:#fff;font-weight:700;font-size:28px;display:grid;place-items:center;}
+  .scene img{display:block;width:min(100%,420px);aspect-ratio:4/3;height:auto;margin:0 auto;}
+  .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:26px;margin-top:20px;}
+  .cols figure{margin:0;}
+  .cols img{display:block;width:min(100%,130px);height:auto;margin:0 auto;}
+  .cols b{display:block;font-size:27px;margin-top:10px;line-height:1.2;}
+  .cols p{font-size:20px;color:#4A4B45;margin:6px 0 0;}
+  .num{width:52px;height:52px;border-radius:50%;background:#18787B;color:#fff;font-size:26px;font-weight:700;display:grid;place-items:center;margin:0 auto 10px;}
+  .pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:20px;margin-top:20px;}
+  .pane{border-radius:18px;padding:18px 16px 22px;}
+  .pane.ok{background:#E1EEED;} .pane.no{background:#FBE9E7;}
+  .pane img{display:block;width:min(100%,300px);aspect-ratio:320/220;height:auto;margin:0 auto;}
+  .pane b{display:block;font-size:26px;line-height:1.2;margin-top:8px;}
+  .pane.ok b{color:#0E5654;} .pane.no b{color:#8E2A1E;}
+  .pane p{font-size:19px;color:#4A4B45;margin:8px 0 0;}
+  .recap{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:16px;margin-top:20px;}
+  .recap figure{margin:0;background:#E1EEED;border-radius:16px;padding:16px 10px 18px;}
+  .recap img{display:block;width:90px;height:90px;margin:0 auto;}
+  .recap b{display:block;font-size:22px;color:#0E5654;margin-top:8px;line-height:1.2;}
+  .closing .row{display:flex;gap:26px;justify-content:center;}
+  .closing .row img{width:110px;height:110px;}
+  .phone{margin:18px auto 0;background:#E1EEED;border-radius:16px;padding:12px 24px;display:inline-block;}
+  .phone span{display:block;font-size:17px;font-weight:700;color:#0E5654;letter-spacing:.08em;text-transform:uppercase;}
+  .phone b{display:block;font-size:clamp(30px,6vw,44px);line-height:1.15;color:#1E1E1C;font-variant-numeric:tabular-nums;}
+
+  /* ---------- done ---------- */
+  .done{text-align:center;max-width:640px;margin-inline:auto;}
+  .done h2{margin-bottom:10px;}
+  .done .row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:24px;}
+
+  /* ---------- panel ---------- */
+  .how{background:var(--accent-soft);border-radius:12px;padding:12px 16px;font-size:16px;color:var(--ink-soft);margin:12px 0 22px;max-width:80ch;}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px;}
+  .tile{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--paper);}
+  .tile span{display:block;font-size:15px;color:var(--ink-soft);font-weight:600;}
+  .tile b{display:block;font-size:clamp(30px,5vw,44px);line-height:1.1;font-variant-numeric:tabular-nums;margin-top:4px;}
+  .tile b.sm{font-size:22px;line-height:1.3;margin-top:10px;}
+  .panel h3{font-size:22px;margin:30px 0 12px;}
+  .bars{display:grid;gap:8px;}
+  .barrow{display:grid;grid-template-columns:minmax(110px,200px) 1fr 44px;gap:12px;align-items:center;font-size:16px;}
+  .barrow .track{height:18px;border-radius:6px;background:var(--line);overflow:hidden;}
+  .barrow .track i{display:block;height:100%;background:var(--accent);}
+  .barrow .n{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;}
+  .filters{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-bottom:14px;}
+  .filters label{display:grid;gap:4px;font-size:15px;font-weight:600;color:var(--ink-soft);}
+  .filters select,.filters input{min-height:44px;border:2px solid var(--line);border-radius:10px;padding:6px 12px;font-size:16px;background:var(--paper);}
+  .filters .grow{flex:1;min-width:180px;}
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:16px;}
+  th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{font-size:14px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;background:var(--paper);}
+  tbody tr:last-child td{border-bottom:none;}
+  td.n{font-variant-numeric:tabular-nums;text-align:right;}
+  .status{color:var(--ink-soft);font-size:16px;margin:10px 0 0;}
+  .empty{padding:24px;text-align:center;color:var(--ink-soft);}
+
+  [hidden]{display:none!important;}
+  img{max-width:100%;}
+  .foot{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-soft);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  .foot a{color:var(--ink-soft);}
+  .login{max-width:520px;margin-inline:auto;}
+  .adminbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .adminbar .who{font-size:15px;color:var(--ink-soft);}
+  .ok-msg{color:var(--ink-soft);font-size:16px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <div class="brand"><img src="img/logo-white.png" alt="Grupo Wish"><i aria-hidden="true"></i><span>Hotel Wish Foz do Iguaçu</span></div>
+    <h1>Usar o computador com segurança</h1>
+    <p>Vamos aprender juntos, com figuras e frases curtas.</p>
+  </header>
+  <main id="view"></main>
+  <footer class="foot"><span>Hotel Wish Foz do Iguaçu · Treinamento de TI</span><a href="#admin" id="admin-link">Área da coordenação</a></footer>
+</div>
+<noscript><p style="padding:20px">Ative o JavaScript do navegador para fazer o treinamento.</p></noscript>
+<script src="config.js"></script>
+<script>
+const DATA = {"slides":[{"kind":"cover","title":"Usar o computador com segurança","subtitle":"Vamos aprender juntos"},{"kind":"how","title":"Como vamos aprender?","items":[{"svg":"i_eye","text":"Olhe","alt":"Um olho"},{"svg":"i_ear","text":"Escute","alt":"Uma orelha"},{"svg":"i_ask","text":"Pergunte","alt":"Um balão de pergunta"}]},{"kind":"scene","n":"1","svg":"s1","text":"Regras protegem o trabalho,\u000bcomo o muro protege a casa.","alt":"Uma casa com um escudo de proteção"},{"kind":"dodont","title":"Regras","okSvg":"d1ok","noSvg":"d1no","okText":"Siga as regras","noText":"Não pule as regras","altOk":"Pessoa seguindo um papel de regras","altNo":"Papel de regras riscado"},{"kind":"scene","n":"2","svg":"s2","text":"Cada pessoa tem as suas chaves.","alt":"Três chaves e três portas"},{"kind":"dodont","title":"Acessos","okSvg":"d2ok","noSvg":"d2no","okText":"Faltou acesso? Peça ajuda","noText":"Não use a chave do colega","altOk":"Pessoa pedindo ajuda por telefone","altNo":"Chave passando de uma pessoa para outra, riscada"},{"kind":"scene","n":"3","svg":"s3","text":"O usuário é o seu crachá no computador.","alt":"Um crachá com a foto de uma pessoa"},{"kind":"dodont","title":"Usuário","okSvg":"d3ok","noSvg":"d3no","okText":"Entre com o seu usuário","noText":"Não empreste o seu usuário","altOk":"Pessoa com o seu crachá","altNo":"Crachá passando de uma pessoa para outra, riscado"},{"kind":"scene","n":"4","svg":"s4","text":"Entre no Auto Sky\u000bpara abrir o CM.","alt":"Uma casa ligada a um navegador que abre o sistema CM, com um plugin"},{"kind":"dodont","title":"Trabalhar de longe","okSvg":"d4ok","noSvg":"d4no","okText":"Entre no Auto Sky","noText":"Não instale programa sozinho","altOk":"Navegador abrindo o sistema CM","altNo":"Programa para instalar, riscado"},{"kind":"scene","n":"5","svg":"s5","text":"Use o seu login\u000bem um computador de cada vez.","alt":"Uma pessoa e um computador, com sinal de certo"},{"kind":"dodont","title":"Um computador","okSvg":"d5ok","noSvg":"d5no","okText":"Um computador de cada vez","noText":"Evite entrar em dois ao mesmo tempo","altOk":"Pessoa usando um computador","altNo":"Pessoa e dois computadores, riscado"},{"kind":"scene","n":"6","svg":"s6","text":"A senha é a chave do seu cofre.","alt":"Um cadeado grande e três estrelas, que representam a senha"},{"kind":"scene","n":"7","svg":"s8","text":"O computador travou? Calma.","alt":"Um computador com uma ampulheta na tela"},{"kind":"steps","title":"O que fazer?","items":[{"n":"1","svg":"i_clock","text":"Espere","alt":"Um relógio"},{"n":"2","svg":"i_window","text":"Feche o programa","alt":"Uma janela com X"},{"n":"3","svg":"i_phone","text":"Chame ajuda","alt":"Um telefone"}]},{"kind":"scene","n":"8","svg":"s9","text":"Guarde seus arquivos\u000bnas pastas de rede.","alt":"Três papéis subindo para uma pasta de rede"},{"kind":"dodont","title":"Onde salvar","okSvg":"d9ok","noSvg":"d9no","okText":"Salve na pasta de rede","noText":"Não salve só no computador","altOk":"Papel indo para a pasta de rede","altNo":"Papel indo só para o computador, riscado"},{"kind":"scene","n":"9","svg":"s10","text":"A planilha é de todos. Cuide dela.","alt":"Uma planilha com três pessoas ao redor"},{"kind":"dodont","title":"Planilha","okSvg":"d10ok","noSvg":"d10no","okText":"Salve e feche quando acabar","noText":"Não deixe aberta sem usar","altOk":"Planilha guardada em uma pasta","altNo":"Planilha com ampulheta de espera"},{"kind":"recap","title":"Lembre destas 5 regras","items":[{"svg":"i_lock","text":"Senha só sua","alt":"Cadeado"},{"svg":"i_card","text":"Usuário só seu","alt":"Crachá"},{"svg":"i_monitor","text":"Um computador","alt":"Computador"},{"svg":"i_folder","text":"Salve na pasta de rede","alt":"Pasta"},{"svg":"i_phone","text":"Peça ajuda","alt":"Telefone"}]},{"kind":"closing","title":"Ficou com dúvida?","subtitle":"Pergunte! Estamos aqui para ajudar.","phone":"(11) 3995-9484"}],"help":{"how":["Olhe as figuras com calma.","Escute a explicação.","Pergunte sempre que tiver dúvida."],"scene":{"1":"Regras são combinados para todo mundo ficar seguro.","2":"Você só abre o que precisa para o seu trabalho.","3":"É o nome que você usa para entrar no computador. Só você usa.","4":"O CM é o sistema principal do hotel. Sem entrar no Auto Sky, ele não abre.","5":"O sistema não bloqueia se você entrar em dois computadores com o seu login, mas não é indicado.","6":"Só você sabe a sua senha. Ela protege as suas atividades e os seus arquivos.","7":"O computador pode estar só pensando. Siga os passos da próxima tela.","8":"Se o computador quebrar, o arquivo continua guardado na pasta.","9":"Todos usam a mesma planilha. Quem esquece de salvar atrapalha os outros."},"dodont":{"Regras":{"ok":"Elas protegem você e o seu trabalho.","no":"Ficou com dúvida? Pergunte."},"Acessos":{"ok":"A ajuda libera só o que você precisa.","no":"Mesmo que a pessoa deixe."},"Usuário":{"ok":"O usuário é só seu.","no":"O que for feito fica no seu nome."},"Trabalhar de longe":{"ok":"Só depois dele o CM abre.","no":"Precisa de um programa? Abra um chamado para a TI."},"Um computador":{"ok":"Saia de um para entrar no outro.","no":"O sistema não bloqueia, mas não é indicado."},"Onde salvar":{"ok":"Todos da equipe encontram o arquivo.","no":"Se o computador quebrar, você perde tudo."},"Planilha":{"ok":"Assim ninguém fica esperando.","no":"Os colegas não conseguem trabalhar."}},"steps":["O computador pode estar só pensando.","Feche só o programa que travou.","Service Desk:\u000b(11) 3995-9484\u000bConte o que estava fazendo."]}};
+(function(){
+  'use strict';
+  var CFG = window.TREINO_CONFIG || {};
+  var API = String(CFG.SUPABASE_URL || '').replace(/\/+$/, '');
+  var ANON = String(CFG.SUPABASE_ANON_KEY || '');
+  function configured(){ return /^https:\/\//.test(API) && ANON.length > 20 && ANON.indexOf('COLE_') !== 0; }
+
+  var HELP = DATA.help;
+  var screens = DATA.slides.filter(function(s){ return s.kind !== 'cover'; });
+  var closingScreen = DATA.slides.filter(function(s){ return s.kind === 'closing'; })[0];
+  var PHONE = (closingScreen && closingScreen.phone) || '';
+  function spokenPhone(){ return PHONE.replace(/\D/g,'').split('').join(', '); }
+  var DEPTS = ['Governança','Recepção','Reservas','Alimentos e Bebidas','Manutenção','Financeiro','Contábil','Compras e Almoxarifado','Recursos Humanos','TI','Lazer e Recreação','Outro'];
+  var KEY = 'wish_treino_pessoa', SKEY = 'wish_treino_sessao';
+  var view = document.getElementById('view');
+  var S = { view:'form', idx:0, person:null, busy:false, session:null, rows:[], people:[], loaded:false, error:'', confirmEmail:null, filterDept:'', filterText:'', speaking:false, adminEmail:'' };
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function br(s){ return esc(s).replace(/[\u000b\n]/g,'<br>'); }
+  function plain(s){ return String(s).replace(/[\u000b\n]+/g,' '); }
+  function img(name, alt){ return '<img src="img/'+name+'.svg" alt="'+esc(alt||'')+'">'; }
+  function load(){ try{ return JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){ return null; } }
+  function save(p){ try{ localStorage.setItem(KEY, JSON.stringify(p)); }catch(e){} }
+  function fmt(iso){ if(!iso) return '—'; try{ return new Date(iso).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'}); }catch(e){ return iso; } }
+
+  /* ---------- Supabase (REST, sem biblioteca) ---------- */
+  async function api(path, o){
+    o = o || {};
+    var h = { apikey: ANON };
+    if(o.auth && S.session) h.Authorization = 'Bearer ' + S.session.access_token;
+    else if(ANON.indexOf('sb_') !== 0) h.Authorization = 'Bearer ' + ANON;
+    if(o.body !== undefined) h['Content-Type'] = 'application/json';
+    if(o.headers){ for(var k in o.headers) h[k] = o.headers[k]; }
+    var res = await fetch(API + path, { method: o.method || 'GET', headers: h, body: o.body !== undefined ? JSON.stringify(o.body) : undefined });
+    var txt = await res.text();
+    if(!res.ok){ var e = new Error(txt || ('HTTP ' + res.status)); e.status = res.status; throw e; }
+    return txt ? JSON.parse(txt) : null;
+  }
+
+  /* ---------- cadastro ---------- */
+  function renderForm(msg){
+    var p = S.person || load() || {};
+    var opts = '<option value="">Escolha na lista</option>' + DEPTS.map(function(d){ return '<option'+(p.depto===d?' selected':'')+'>'+esc(d)+'</option>'; }).join('');
+    view.innerHTML =
+      '<section class="card form-card" aria-labelledby="f-title">'+
+      '<h2 id="f-title" tabindex="-1">Antes de começar</h2>'+
+      '<p class="lead">Preencha os dados abaixo. Leva menos de um minuto.</p>'+
+      '<form id="reg" novalidate>'+
+        '<div class="field"><label for="f-nome">Seu nome</label><input id="f-nome" autocomplete="name" maxlength="120" required><p class="err" id="e-nome" role="alert"></p></div>'+
+        '<div class="field"><label for="f-depto">Seu departamento</label><select id="f-depto" required>'+opts+'</select><p class="err" id="e-depto" role="alert"></p></div>'+
+        '<div class="field" id="w-outro" hidden><label for="f-outro">Qual é o departamento?</label><input id="f-outro" maxlength="60"><p class="err" id="e-outro" role="alert"></p></div>'+
+        '<div class="field"><label for="f-email">Seu e-mail</label><input id="f-email" type="email" autocomplete="email" inputmode="email" maxlength="160" required><p class="err" id="e-email" role="alert"></p></div>'+
+        '<p class="notice">Usamos o seu nome, departamento e e-mail só para contar quantas pessoas fizeram o treinamento. Só quem coordena o treinamento vê essas informações.</p>'+
+        '<p class="err form-error" id="e-form" role="alert"></p>'+
+        '<button class="btn primary" id="go" type="submit">Começar o treinamento</button>'+
+      '</form></section>';
+    var nome = document.getElementById('f-nome'), email = document.getElementById('f-email'), depto = document.getElementById('f-depto'), outro = document.getElementById('f-outro');
+    if(p.nome) nome.value = p.nome;
+    if(p.email) email.value = p.email;
+    if(p.depto === 'Outro' && p.outro) outro.value = p.outro;
+    function syncOutro(){ document.getElementById('w-outro').hidden = depto.value !== 'Outro'; }
+    depto.addEventListener('change', syncOutro); syncOutro();
+    if(msg) document.getElementById('e-form').textContent = msg;
+    else if(!configured()) document.getElementById('e-form').textContent = 'Esta página ainda não está ligada ao banco de dados. Avise a TI.';
+    document.getElementById('reg').addEventListener('submit', submitForm);
+  }
+  function setErr(id, text){ var el = document.getElementById(id); if(el) el.textContent = text || ''; }
+
+  async function submitForm(ev){
+    ev.preventDefault();
+    if(S.busy) return;
+    var nome = document.getElementById('f-nome').value.trim().replace(/\s+/g,' ');
+    var depto = document.getElementById('f-depto').value;
+    var outro = document.getElementById('f-outro').value.trim().replace(/\s+/g,' ');
+    var email = document.getElementById('f-email').value.trim().toLowerCase();
+    var ok = true;
+    setErr('e-form',''); setErr('e-nome',''); setErr('e-depto',''); setErr('e-outro',''); setErr('e-email','');
+    if(nome.length < 3){ setErr('e-nome','Escreva o seu nome completo.'); ok = false; }
+    if(!depto){ setErr('e-depto','Escolha o seu departamento.'); ok = false; }
+    if(depto === 'Outro' && outro.length < 2){ setErr('e-outro','Escreva o nome do departamento.'); ok = false; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ setErr('e-email','Escreva um e-mail válido. Exemplo: nome@empresa.com'); ok = false; }
+    if(!ok){ var first = document.querySelector('.err:not(:empty)'); if(first && first.previousElementSibling) first.previousElementSibling.focus(); return; }
+    if(!configured()){ setErr('e-form','Esta página ainda não está ligada ao banco de dados. Avise a TI.'); return; }
+
+    S.busy = true;
+    var btn = document.getElementById('go'); btn.disabled = true; btn.textContent = 'Registrando…';
+    var departamento = depto === 'Outro' ? outro : depto;
+    try{
+      await api('/rest/v1/treinamento_acessos', { method:'POST', headers:{ Prefer:'return=minimal' }, body:{ nome:nome, departamento:departamento, email:email } });
+      S.person = { nome:nome, depto:depto, outro:outro, email:email };
+      save(S.person);
+      S.busy = false; S.idx = 0; S.view = 'lesson'; render();
+    }catch(e){
+      S.busy = false;
+      renderForm('Não consegui registrar o seu acesso. Confira a internet e tente de novo. Se continuar assim, ligue para o Service Desk' + (PHONE ? ': ' + PHONE : '') + '.');
+    }
+  }
+
+  /* ---------- treinamento ---------- */
+  function stageHTML(s){
+    var h = '';
+    if(s.kind === 'how'){
+      h = '<h2 class="t" id="stage-t" tabindex="-1">'+br(s.title)+'</h2><div class="cols">' + s.items.map(function(it,i){
+        return '<figure>'+img(it.svg,it.alt)+'<b>'+esc(it.text)+'</b><p>'+esc(HELP.how[i]||'')+'</p></figure>'; }).join('') + '</div>';
+    } else if(s.kind === 'scene'){
+      h = '<div class="scene"><span class="badge" aria-label="Assunto '+esc(s.n)+'">'+esc(s.n)+'</span>'+img(s.svg,s.alt)+'<h2 class="t" id="stage-t" tabindex="-1">'+br(s.text)+'</h2><p class="sub">'+esc(HELP.scene[s.n]||'')+'</p></div>';
+    } else if(s.kind === 'dodont'){
+      var d = HELP.dodont[s.title] || {};
+      h = '<h2 class="t" id="stage-t" tabindex="-1">'+esc(s.title)+'</h2><div class="pair">'+
+        '<div class="pane ok"><span class="sr-only">Certo: </span>'+img(s.okSvg,s.altOk)+'<b>'+esc(s.okText)+'</b><p>'+esc(d.ok||'')+'</p></div>'+
+        '<div class="pane no"><span class="sr-only">Errado: </span>'+img(s.noSvg,s.altNo)+'<b>'+esc(s.noText)+'</b><p>'+esc(d.no||'')+'</p></div></div>';
+    } else if(s.kind === 'steps'){
+      h = '<h2 class="t" id="stage-t" tabindex="-1">'+esc(s.title)+'</h2><div class="cols">' + s.items.map(function(it,i){
+        return '<figure><div class="num">'+esc(it.n)+'</div>'+img(it.svg,it.alt)+'<b>'+esc(it.text)+'</b><p>'+br(HELP.steps[i]||'')+'</p></figure>'; }).join('') + '</div>';
+    } else if(s.kind === 'recap'){
+      h = '<h2 class="t" id="stage-t" tabindex="-1">'+esc(s.title)+'</h2><div class="recap">' + s.items.map(function(it){
+        return '<figure>'+img(it.svg,it.alt)+'<b>'+esc(it.text)+'</b></figure>'; }).join('') + '</div>';
+    } else if(s.kind === 'closing'){
+      h = '<div class="closing"><div class="row">'+img('i_ask','Balão de pergunta')+img('i_phone','Telefone')+'</div><h2 class="t" id="stage-t" tabindex="-1">'+esc(s.title)+'</h2><p class="sub">'+esc(s.subtitle)+'</p>'+
+        (PHONE ? '<p class="phone"><span>Service Desk</span><b>'+esc(PHONE)+'</b></p>' : '')+'</div>';
+    }
+    return h;
+  }
+  function speakText(s){
+    if(s.kind === 'how') return s.title + '. ' + s.items.map(function(it,i){ return it.text + '. ' + (HELP.how[i]||''); }).join(' ');
+    if(s.kind === 'scene') return plain(s.text) + ' ' + (HELP.scene[s.n]||'');
+    if(s.kind === 'dodont'){ var d = HELP.dodont[s.title]||{}; return s.title + '. Certo: ' + s.okText + '. ' + (d.ok||'') + ' Errado: ' + s.noText + '. ' + (d.no||''); }
+    if(s.kind === 'steps') return s.title + ' ' + s.items.map(function(it,i){ return 'Passo ' + it.n + ': ' + it.text + '. ' + plain(HELP.steps[i]||'').replace(PHONE, spokenPhone()); }).join(' ');
+    if(s.kind === 'recap') return s.title + '. ' + s.items.map(function(it){ return it.text; }).join('. ') + '.';
+    if(s.kind === 'closing') return s.title + ' ' + s.subtitle + (PHONE ? ' Service Desk: ' + spokenPhone() + '.' : '');
+    return '';
+  }
+  var ICON_L = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>';
+  var ICON_R = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
+  var ICON_S = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/></svg>';
+  var HAS_TTS = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+
+  function renderLesson(){
+    var s = screens[S.idx], last = S.idx === screens.length - 1;
+    var pct = Math.round(((S.idx + 1) / screens.length) * 100);
+    view.innerHTML =
+      '<section aria-label="Treinamento">'+
+      '<div class="meta"><span>Tela '+(S.idx+1)+' de '+screens.length+'</span><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+pct+'"><i style="width:'+pct+'%"></i></div></div>'+
+      '<div class="stage">'+stageHTML(s)+'</div>'+
+      '<div class="controls">'+
+        '<button class="btn" id="prev" type="button"'+(S.idx===0?' disabled':'')+'>'+ICON_L+'Voltar</button>'+
+        '<div class="mid">'+(HAS_TTS?'<button class="btn" id="listen" type="button">'+ICON_S+'<span>Ouvir</span></button>':'')+'</div>'+
+        '<button class="btn primary" id="next" type="button">'+(last?'Terminei':'Próximo')+(last?'':ICON_R)+'</button>'+
+      '</div></section>';
+    document.getElementById('prev').addEventListener('click', function(){ go(-1); });
+    document.getElementById('next').addEventListener('click', function(){ go(1); });
+    var l = document.getElementById('listen'); if(l) l.addEventListener('click', listen);
+    var t = document.getElementById('stage-t'); if(t) t.focus({preventScroll:true});
+    window.scrollTo(0,0);
+  }
+  function go(d){
+    stopSpeech();
+    if(d > 0 && S.idx === screens.length - 1){ S.view = 'done'; render(); return; }
+    S.idx = Math.max(0, Math.min(screens.length - 1, S.idx + d)); renderLesson();
+  }
+  function stopSpeech(){ if(HAS_TTS){ try{ window.speechSynthesis.cancel(); }catch(e){} } S.speaking = false; paintListen(); }
+  function paintListen(){ var b = document.getElementById('listen'); if(b) b.querySelector('span').textContent = S.speaking ? 'Parar' : 'Ouvir'; }
+  function listen(){
+    if(!HAS_TTS) return;
+    if(S.speaking){ stopSpeech(); return; }
+    var u = new SpeechSynthesisUtterance(speakText(screens[S.idx]));
+    u.lang = 'pt-BR'; u.rate = 0.92;
+    var v = (window.speechSynthesis.getVoices() || []).filter(function(x){ return /^pt[-_]BR/i.test(x.lang); })[0];
+    if(v) u.voice = v;
+    u.onend = u.onerror = function(){ S.speaking = false; paintListen(); };
+    S.speaking = true; paintListen();
+    window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
+  }
+  function renderDone(){
+    var first = ((S.person && S.person.nome) || '').split(' ')[0];
+    view.innerHTML =
+      '<section class="card done" aria-labelledby="d-title"><h2 id="d-title" tabindex="-1">Parabéns'+(first?', '+esc(first):'')+'!</h2>'+
+      '<p class="lead">Você terminou o treinamento. Ficou com dúvida? Pergunte à sua liderança ou ligue para o Service Desk'+(PHONE?': <b>'+esc(PHONE)+'</b>':'')+'.</p>'+
+      '<div class="row"><button class="btn primary" id="again" type="button">Rever o treinamento</button></div></section>';
+    document.getElementById('again').addEventListener('click', function(){ S.idx = 0; S.view = 'lesson'; render(); });
+    document.getElementById('d-title').focus({preventScroll:true});
+    window.scrollTo(0,0);
+  }
+
+  /* ---------- área da coordenação (admin) ---------- */
+  function sessionValid(){ return S.session && S.session.expires_at > Date.now(); }
+  function storeSession(){ try{ if(S.session) sessionStorage.setItem(SKEY, JSON.stringify(S.session)); else sessionStorage.removeItem(SKEY); }catch(e){} }
+  function restoreSession(){ try{ var s = JSON.parse(sessionStorage.getItem(SKEY)||'null'); if(s && s.expires_at > Date.now()) S.session = s; }catch(e){} }
+
+  function renderLogin(msg){
+    view.innerHTML =
+      '<section class="card form-card login" aria-labelledby="l-title"><h2 id="l-title" tabindex="-1">Área da coordenação</h2>'+
+      '<p class="lead">Entre com o e-mail e a senha de admin para ver quem acessou o treinamento.</p>'+
+      '<form id="adm" novalidate>'+
+        '<div class="field"><label for="a-email">E-mail</label><input id="a-email" type="email" autocomplete="username" inputmode="email"></div>'+
+        '<div class="field"><label for="a-pass">Senha</label><input id="a-pass" type="password" autocomplete="current-password"></div>'+
+        '<p class="err form-error" id="a-err" role="alert"></p>'+
+        '<div class="row" style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn primary" id="a-go" type="submit">Entrar</button><button class="btn" id="a-back" type="button">Voltar ao treinamento</button></div>'+
+      '</form></section>';
+    if(msg) document.getElementById('a-err').textContent = msg;
+    document.getElementById('a-back').addEventListener('click', function(){ location.hash = ''; });
+    document.getElementById('adm').addEventListener('submit', async function(ev){
+      ev.preventDefault();
+      var email = document.getElementById('a-email').value.trim().toLowerCase(), pass = document.getElementById('a-pass').value;
+      var err = document.getElementById('a-err'); err.textContent = '';
+      if(!email || !pass){ err.textContent = 'Escreva o e-mail e a senha.'; return; }
+      if(!configured()){ err.textContent = 'A página ainda não está ligada ao banco de dados.'; return; }
+      var b = document.getElementById('a-go'); b.disabled = true; b.textContent = 'Entrando…';
+      try{
+        var r = await api('/auth/v1/token?grant_type=password', { method:'POST', body:{ email:email, password:pass } });
+        S.session = { access_token:r.access_token, expires_at: Date.now() + ((r.expires_in || 3600) * 1000) - 60000 };
+        S.adminEmail = email; storeSession();
+        await openPanel();
+      }catch(e){
+        b.disabled = false; b.textContent = 'Entrar';
+        err.textContent = (e && (e.status === 400 || e.status === 401)) ? 'E-mail ou senha incorretos.' : 'Não consegui entrar agora. Tente de novo.';
+      }
+    });
+  }
+  async function openPanel(){
+    S.view = 'panel'; S.loaded = false; S.error = ''; S.rows = []; renderPanelShell();
+    try{
+      var isAdmin = await api('/rest/v1/rpc/treinamento_is_admin', { method:'POST', body:{}, auth:true });
+      if(isAdmin !== true){ S.session = null; storeSession(); S.view = 'login'; renderLogin('Esta conta não tem permissão de admin.'); return; }
+      S.rows = await loadRows(); S.loaded = true; aggregate(); paintPanel();
+    }catch(e){
+      if(e && (e.status === 401 || e.status === 403)){ S.session = null; storeSession(); S.view = 'login'; renderLogin('Sua sessão acabou. Entre de novo.'); return; }
+      S.loaded = true; S.error = 'Não foi possível carregar os acessos agora. Toque em "Atualizar".'; paintPanel();
+    }
+  }
+  async function loadRows(){
+    var all = [], from = 0, step = 1000;
+    for(;;){
+      var part;
+      try{
+        part = await api('/rest/v1/treinamento_acessos?select=id,nome,departamento,email,created_at&order=created_at.asc', { auth:true, headers:{ Range: from + '-' + (from + step - 1), 'Range-Unit':'items' } });
+      }catch(e){ if(e && e.status === 416) break; throw e; }
+      all = all.concat(part || []);
+      if(!part || part.length < step || from > 100000) break;
+      from += step;
+    }
+    return all;
+  }
+  function aggregate(){
+    var by = {};
+    S.rows.forEach(function(r){
+      var k = String(r.email || '').toLowerCase();
+      var p = by[k] || (by[k] = { email:k, nome:'', departamento:'', primeiro:r.created_at, ultimo:r.created_at, visitas:0 });
+      p.visitas += 1;
+      if(r.created_at < p.primeiro) p.primeiro = r.created_at;
+      if(r.created_at >= p.ultimo){ p.ultimo = r.created_at; p.nome = r.nome; p.departamento = r.departamento; }
+    });
+    S.people = Object.keys(by).map(function(k){ return by[k]; });
+  }
+  function renderPanelShell(){
+    var depts = Array.from(new Set(S.people.map(function(r){ return r.departamento; }).filter(Boolean))).sort(function(a,b){ return a.localeCompare(b,'pt-BR'); });
+    view.innerHTML =
+      '<section class="card panel" aria-labelledby="p-title">'+
+      '<div class="adminbar"><h2 id="p-title" tabindex="-1">Painel de acessos</h2><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn small" id="refresh" type="button">Atualizar</button><button class="btn small" id="logout" type="button">Sair</button><button class="btn small" id="tolesson" type="button">Ver o treinamento</button></div></div>'+
+      '<p class="how"><b>Como contamos:</b> 1 pessoa = 1 e-mail (maiúsculas e minúsculas contam igual). Cada vez que a pessoa aperta "Começar o treinamento" conta 1 acesso. Os seus próprios testes também aparecem aqui; use "Remover" para apagá-los.</p>'+
+      '<p class="status" id="pstat" role="status"></p>'+
+      '<div class="tiles" id="tiles"></div>'+
+      '<h3>Pessoas por departamento</h3><div class="bars" id="bars"></div>'+
+      '<h3>Quem acessou</h3>'+
+      '<div class="filters"><label>Departamento<select id="fd"></select></label><label class="grow">Buscar por nome ou e-mail<input id="fq" type="search" autocomplete="off"></label><button class="btn small" id="csv" type="button">Baixar planilha (CSV)</button></div>'+
+      '<div class="tablewrap"><table><thead><tr><th>Nome</th><th>Departamento</th><th>E-mail</th><th>Primeiro acesso</th><th>Último acesso</th><th class="n">Acessos</th><th><span class="sr-only">Ações</span></th></tr></thead><tbody id="tb"></tbody></table></div></section>';
+    var fd = document.getElementById('fd');
+    fd.innerHTML = '<option value="">Todos</option>' + depts.map(function(d){ return '<option>'+esc(d)+'</option>'; }).join('');
+    fd.value = S.filterDept;
+    var fq = document.getElementById('fq'); fq.value = S.filterText;
+    fd.addEventListener('change', function(){ S.filterDept = fd.value; paintTable(); });
+    fq.addEventListener('input', function(){ S.filterText = fq.value; paintTable(); });
+    document.getElementById('csv').addEventListener('click', exportCsv);
+    document.getElementById('refresh').addEventListener('click', function(){ openPanel(); });
+    document.getElementById('logout').addEventListener('click', function(){ S.session = null; storeSession(); S.view = 'login'; renderLogin(); });
+    document.getElementById('tolesson').addEventListener('click', function(){ location.hash = ''; });
+    document.getElementById('tb').addEventListener('click', onRowAction);
+    paintPanel();
+  }
+  function paintPanel(){
+    if(S.view !== 'panel' || !document.getElementById('tiles')) return;
+    document.getElementById('pstat').textContent = S.error ? S.error : (S.loaded ? '' : 'Carregando os acessos…');
+    var total = S.rows.length, last = '';
+    S.people.forEach(function(p){ if(p.ultimo > last) last = p.ultimo; });
+    document.getElementById('tiles').innerHTML =
+      '<div class="tile"><span>Pessoas que acessaram</span><b>'+S.people.length+'</b></div>'+
+      '<div class="tile"><span>Acessos no total</span><b>'+total+'</b></div>'+
+      '<div class="tile"><span>Último acesso</span><b class="sm">'+esc(fmt(last))+'</b></div>';
+    var by = {};
+    S.people.forEach(function(r){ var k = r.departamento || 'Sem departamento'; by[k] = (by[k] || 0) + 1; });
+    var keys = Object.keys(by).sort(function(a,b){ return by[b] - by[a] || a.localeCompare(b,'pt-BR'); });
+    var max = keys.length ? by[keys[0]] : 1;
+    document.getElementById('bars').innerHTML = keys.length ? keys.map(function(k){
+      return '<div class="barrow"><span>'+esc(k)+'</span><span class="track"><i style="width:'+Math.round(by[k]/max*100)+'%"></i></span><span class="n">'+by[k]+'</span></div>'; }).join('') : '<p class="status">'+(S.loaded?'Ninguém acessou ainda.':'')+'</p>';
+    var fd = document.getElementById('fd');
+    var depts = Array.from(new Set(S.people.map(function(r){ return r.departamento; }).filter(Boolean))).sort(function(a,b){ return a.localeCompare(b,'pt-BR'); });
+    var cur = fd.value;
+    fd.innerHTML = '<option value="">Todos</option>' + depts.map(function(d){ return '<option>'+esc(d)+'</option>'; }).join('');
+    fd.value = depts.indexOf(cur) >= 0 ? cur : ''; S.filterDept = fd.value;
+    paintTable();
+  }
+  function filtered(){
+    var q = S.filterText.trim().toLowerCase();
+    return S.people.filter(function(r){
+      if(S.filterDept && r.departamento !== S.filterDept) return false;
+      if(q && (String(r.nome||'').toLowerCase().indexOf(q) < 0 && String(r.email||'').toLowerCase().indexOf(q) < 0)) return false;
+      return true;
+    }).sort(function(a,b){ return String(b.ultimo||'').localeCompare(String(a.ultimo||'')); });
+  }
+  function paintTable(){
+    var tb = document.getElementById('tb'); if(!tb) return;
+    var rows = filtered();
+    tb.textContent = '';
+    if(!rows.length){
+      var tr0 = document.createElement('tr'), td0 = document.createElement('td');
+      td0.colSpan = 7; td0.className = 'empty'; td0.textContent = S.loaded ? (S.people.length ? 'Nenhuma pessoa com esse filtro.' : 'Ninguém acessou ainda.') : 'Carregando…';
+      tr0.appendChild(td0); tb.appendChild(tr0); return;
+    }
+    rows.forEach(function(r){
+      var tr = document.createElement('tr');
+      [r.nome, r.departamento, r.email, fmt(r.primeiro), fmt(r.ultimo)].forEach(function(v){ var td = document.createElement('td'); td.textContent = v || '—'; tr.appendChild(td); });
+      var tn = document.createElement('td'); tn.className = 'n'; tn.textContent = String(r.visitas); tr.appendChild(tn);
+      var ta = document.createElement('td'), b = document.createElement('button');
+      b.type = 'button'; b.className = 'btn small'; b.dataset.email = r.email;
+      b.textContent = S.confirmEmail === r.email ? 'Confirmar remoção' : 'Remover';
+      if(S.confirmEmail === r.email) b.classList.add('primary');
+      ta.appendChild(b); tr.appendChild(ta); tb.appendChild(tr);
+    });
+  }
+  async function onRowAction(ev){
+    var b = ev.target.closest('button[data-email]'); if(!b) return;
+    var email = b.dataset.email;
+    if(S.confirmEmail !== email){ S.confirmEmail = email; paintTable(); return; }
+    S.confirmEmail = null;
+    try{ await api('/rest/v1/treinamento_acessos?email=eq.' + encodeURIComponent(email), { method:'DELETE', auth:true, headers:{ Prefer:'return=minimal' } }); await openPanel(); }
+    catch(e){ S.error = 'Não foi possível remover agora. Tente de novo.'; paintPanel(); }
+  }
+  function csvCell(v){
+    var s = String(v == null ? '' : v);
+    if(/^[=+\-@\t\r]/.test(s)) s = "'" + s;
+    return '"' + s.replace(/"/g,'""') + '"';
+  }
+  function exportCsv(){
+    var head = ['Nome','Departamento','E-mail','Primeiro acesso','Último acesso','Acessos'];
+    var lines = [head.map(csvCell).join(';')];
+    filtered().forEach(function(r){ lines.push([r.nome,r.departamento,r.email,fmt(r.primeiro),fmt(r.ultimo),r.visitas].map(csvCell).join(';')); });
+    var blob = new Blob(['﻿' + lines.join('\r\n')], { type:'text/csv;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'acessos-treinamento-' + new Date().toISOString().slice(0,10) + '.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+  }
+
+  /* ---------- rotas ---------- */
+  function render(){
+    if(S.view === 'panel') renderPanelShell();
+    else if(S.view === 'login') renderLogin();
+    else if(S.view === 'lesson') renderLesson();
+    else if(S.view === 'done') renderDone();
+    else renderForm();
+  }
+  function route(){
+    stopSpeech();
+    if(location.hash === '#admin'){
+      if(sessionValid()){ openPanel(); }
+      else { S.view = 'login'; renderLogin(); }
+    } else {
+      S.view = S.person ? (S.view === 'lesson' || S.view === 'done' ? S.view : 'lesson') : 'form';
+      if(S.view === 'panel' || S.view === 'login') S.view = S.person ? 'lesson' : 'form';
+      render();
+    }
+  }
+  window.addEventListener('hashchange', route);
+  document.addEventListener('keydown', function(e){
+    if(S.view !== 'lesson') return;
+    var tag = (e.target && e.target.tagName) || '';
+    if(tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
+    if(e.key === 'ArrowRight'){ go(1); } else if(e.key === 'ArrowLeft'){ go(-1); }
+  });
+  restoreSession();
+  route();
+})();
+</script>
+</body>
+</html>
