@@ -197,6 +197,13 @@
     .hero-side:not(:has(.mascot)){padding-bottom:16px;gap:14px;}
     .zoomctl{top:6px;right:8px;}
   }
+
+  /* ---------- Mr. Wish discreto nas telas de treinamento ---------- */
+  .controls .mid{position:relative;}
+  .buddy{position:absolute;left:calc(50% + 72px);bottom:-4px;width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:50% 6%;background:#E1EEED;border:2px solid #18787B;pointer-events:none;user-select:none;}
+  .buddy-big{display:block;width:112px;height:112px;border-radius:50%;object-fit:cover;object-position:50% 14%;background:#E1EEED;border:3px solid #18787B;margin:0 auto 10px;}  @media (max-width:640px){ .buddy{display:none;} .buddy-big{width:92px;height:92px;} }
+  @media (prefers-reduced-motion:no-preference){ .buddy,.buddy-big{animation:bob 3.2s ease-in-out infinite;transform-origin:50% 100%;} }
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(0);}50%{transform:translateY(-3px) rotate(1.5deg);}}
 </style>
 </head>
 <body>
@@ -386,7 +393,7 @@ const DATA = {"slides":[{"kind":"cover","title":"Usar o computador com seguranç
       '<div class="stage">'+stageHTML(s)+'</div>'+
       '<div class="controls">'+
         '<button class="btn" id="prev" type="button"'+(S.idx===0?' disabled':'')+'>'+ICON_L+'Voltar</button>'+
-        '<div class="mid">'+(HAS_TTS?'<button class="btn" id="listen" type="button">'+ICON_S+'<span>Ouvir</span></button>':'')+'</div>'+
+        '<div class="mid">'+(HAS_TTS?'<button class="btn" id="listen" type="button">'+ICON_S+'<span>Ouvir</span></button>':'')+'<img class="buddy" src="img/mr-wish.png" alt="" aria-hidden="true" onerror="this.remove()"></div>'+
         '<button class="btn primary" id="next" type="button">'+(last?'Terminei':'Próximo')+(last?'':ICON_R)+'</button>'+
       '</div></section>';
     document.getElementById('prev').addEventListener('click', function(){ go(-1); });
@@ -416,7 +423,7 @@ const DATA = {"slides":[{"kind":"cover","title":"Usar o computador com seguranç
   function renderDone(){ setCompact(true); setWelcome(false);
     var first = ((S.person && S.person.nome) || '').split(' ')[0];
     view.innerHTML =
-      '<section class="card done" aria-labelledby="d-title"><h2 id="d-title" tabindex="-1">Parabéns'+(first?', '+esc(first):'')+'!</h2>'+
+      '<section class="card done" aria-labelledby="d-title"><img class="buddy-big" src="img/mr-wish.png" alt="" aria-hidden="true" onerror="this.remove()"><h2 id="d-title" tabindex="-1">Parabéns'+(first?', '+esc(first):'')+'!</h2>'+
       '<p class="lead">Você terminou o treinamento. Ficou com dúvida? Pergunte à sua liderança ou ligue para o Service Desk'+(PHONE?': <b>'+esc(PHONE)+'</b>':'')+'.</p>'+
       '<div class="row"><button class="btn primary" id="again" type="button">Rever o treinamento</button></div></section>';
     document.getElementById('again').addEventListener('click', function(){ S.idx = 0; S.view = 'lesson'; render(); });
