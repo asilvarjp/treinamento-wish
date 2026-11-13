@@ -21,7 +21,7 @@
   }
   *{box-sizing:border-box;}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:"Work Sans",ui-sans-serif,system-ui,sans-serif;font-size:16px;line-height:1.5;padding:0 16px;}
-  .wrap{max-width:1000px;margin:0 auto;padding-block:12px 12px;}
+  .wrap{max-width:1140px;margin:0 auto;padding-block:12px 12px;}
   h1,h2,h3{margin:0;text-wrap:balance;}
   button,input,select{font:inherit;color:inherit;}
   .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
@@ -145,9 +145,62 @@
   .foot{margin-top:8px;padding-top:6px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-soft);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
   .foot a{color:var(--ink-soft);}
 
+  /* ---------- tamanho das letras (A- / A+) ---------- */
+  .zoomctl{position:fixed;top:10px;right:14px;display:flex;gap:6px;z-index:20;}
+  .zoomctl button{min-width:36px;height:30px;padding:0 8px;border-radius:8px;border:1px solid rgba(255,255,255,.35);background:rgba(20,32,31,.78);color:#F3F2ED;font-weight:700;font-size:14px;cursor:pointer;}
+  .zoomctl button:hover{background:rgba(255,255,255,.18);}
+
+  /* ---------- tela de entrada (dividida) ---------- */
+  body.welcome .mast,body.welcome .foot{display:none;}
+  body.welcome .wrap{max-width:1020px;padding-block:22px;}
+  body.welcome main{margin-top:0;}
+  .split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);background:#FFFFFF;color:#1E1E1C;border-radius:22px;overflow:hidden;box-shadow:0 18px 50px rgba(15,60,58,.18);border:1px solid #D9DDD8;}
+  .split :focus-visible{outline-color:#18787B;}
+  .hero-side{position:relative;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:12px;padding:30px 26px 0;text-align:center;color:#F3F2ED;background:linear-gradient(160deg,#0B3F41 0%,#127075 55%,#18787B 100%);}
+  .hero-side::before{content:"";position:absolute;inset:0;z-index:-1;background:url(img/cover_stars.svg) no-repeat right -30px top -10px/auto 120%;opacity:.35;}
+  .hero-logo{width:min(78%,250px);height:auto;display:block;}
+  .hero-tag{margin:0;font-family:"Zilla Slab",serif;font-weight:600;font-size:clamp(18px,2.2vw,23px);line-height:1.25;max-width:20ch;color:#EAF4F2;}
+  .mascot{display:block;width:auto;max-width:86%;height:min(54vh,360px);object-fit:contain;object-position:bottom;margin-top:auto;filter:drop-shadow(0 8px 14px rgba(0,0,0,.28));}
+  .hero-side:not(:has(.mascot)){padding-bottom:34px;justify-content:center;gap:22px;}
+  .form-side{padding:clamp(22px,3.4vw,38px) clamp(20px,3.6vw,44px);display:flex;flex-direction:column;justify-content:center;}
+  .eyebrow{margin:0 0 4px;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#18787B;}
+  .wtitle{font-size:clamp(23px,2.8vw,31px);line-height:1.15;font-weight:700;outline:none;}
+  .wlead{margin:6px 0 16px;color:#55564F;font-size:16px;}
+  .split .field{margin-bottom:11px;}
+  .split .field label{font-size:14px;font-weight:600;color:#33342F;margin-bottom:4px;}
+  .ig{position:relative;}
+  .ig svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:20px;height:20px;fill:#6E8583;pointer-events:none;}
+  .split .ig input,.split .ig select{width:100%;min-height:46px;padding:8px 14px 8px 44px;font-size:16px;border:1.5px solid #CBD3CF;border-radius:11px;background:#F6F8F7;color:#1E1E1C;}
+  .split .ig select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%236E8583' d='M5 7l5 6 5-6z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:16px;padding-right:38px;}
+  .split .ig input:focus,.split .ig select:focus{border-color:#18787B;background-color:#fff;outline:none;box-shadow:0 0 0 3px #CFE6E3;}
+  .split .ig input::placeholder{color:#8A9693;}
+  .split .err{color:#A93226;}
+  .split .form-error{background:#FBE9E7;}
+  .wbtn{width:100%;min-height:50px;margin-top:4px;border:0;border-radius:12px;background:#0F4F51;color:#fff;font-weight:700;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 6px 16px rgba(15,79,81,.28);}
+  .wbtn:not(:disabled):hover{background:#0B3F41;}
+  .wbtn:disabled{opacity:.55;cursor:default;box-shadow:none;}
+  .wlink{display:block;margin:12px auto 0;background:none;border:0;color:#0F4F51;font-weight:600;font-size:15px;cursor:pointer;text-decoration:underline;}
+  .wnotes{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px;}
+  .wnotes li{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.4;color:#55564F;}
+  .wnotes svg,.whelp svg{flex:none;width:18px;height:18px;fill:#18787B;margin-top:1px;}
+  .whelp{display:flex;gap:10px;align-items:center;margin:14px 0 0;padding:9px 14px;background:#E8F2F0;border-radius:10px;font-size:14px;color:#0E5654;}
+  .whelp b{font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .wfoot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:14px 0 0;padding-top:10px;border-top:1px solid #E3E7E4;font-size:12px;color:#7A857F;}
+  .wfoot a{color:#7A857F;}
+  @media (max-width:760px){
+    body.welcome .wrap{padding-block:8px;}
+    .split{grid-template-columns:1fr;border-radius:18px;}
+    .hero-side{flex-direction:row;justify-content:center;align-items:center;gap:14px;padding:16px 18px;text-align:left;}
+    .hero-logo{width:96px;flex:none;}
+    .hero-tag{font-size:15px;max-width:22ch;}
+    .mascot{display:none;}
+    .hero-side:not(:has(.mascot)){padding-bottom:16px;gap:14px;}
+    .zoomctl{top:6px;right:8px;}
+  }
 </style>
 </head>
 <body>
+<div class="zoomctl" role="group" aria-label="Tamanho das letras"><button type="button" id="z-down" aria-label="Diminuir as letras">A&minus;</button><button type="button" id="z-up" aria-label="Aumentar as letras">A+</button></div>
 <div class="wrap">
   <header class="mast">
     <div class="brand"><img src="img/logo-white.png" alt="Grupo Wish"><i aria-hidden="true"></i><span>Hotel Wish Foz do Iguaçu</span></div>
@@ -177,6 +230,23 @@ const DATA = {"slides":[{"kind":"cover","title":"Usar o computador com seguranç
   var view = document.getElementById('view');
   var S = { view:'form', idx:0, person:null, busy:false, session:null, rows:[], people:[], loaded:false, error:'', confirmEmail:null, filterDept:'', filterText:'', speaking:false, adminEmail:'' };
 
+  function setWelcome(on){ document.body.classList.toggle('welcome', !!on); }
+  var IC = {
+    user:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-3.3 0-8 1.7-8 5v1h16v-1c0-3.3-4.7-5-8-5z"/></svg>',
+    dept:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v6h5a1 1 0 0 1 1 1v9h-2v-8h-4v8H4zm3-14v2h2V7H7zm0 4v2h2v-2H7zm0 4v2h2v-2H7z"/></svg>',
+    mail:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm8 7.2L19 7H5l7 5.2zM5 9.3V17h14V9.3l-7 5.2-7-5.2z"/></svg>',
+    lock:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10V8a5 5 0 0 1 10 0v2h1a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1h1zm2 0h6V8a3 3 0 0 0-6 0v2z"/></svg>',
+    shield:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5l8-3zm-1 13l6-6-1.4-1.4L11 12.2 8.4 9.6 7 11l4 4z"/></svg>',
+    clock:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 5v5.4l3.6 2.1-1 1.7L11 13V7h2z"/></svg>',
+    phone:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1l-2.2 2.2z"/></svg>'
+  };
+  function heroHTML(){
+    return '<aside class="hero-side">'+
+      '<img class="hero-logo" src="img/logo-vertical-escuro.png" alt="Grupo Wish">'+
+      '<p class="hero-tag">Transformando desejos em memórias inesquecíveis</p>'+
+      '<img class="mascot" src="img/mr-wish.png" alt="Mr. Wish, o mascote do Grupo Wish" onerror="this.remove()">'+
+      '</aside>';
+  }
   function setCompact(on){ document.body.classList.toggle('compact', !!on); }
   function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function br(s){ return esc(s).replace(/[\u000b\n]/g,'<br>'); }
@@ -201,23 +271,31 @@ const DATA = {"slides":[{"kind":"cover","title":"Usar o computador com seguranç
   }
 
   /* ---------- cadastro ---------- */
-  function renderForm(msg){ setCompact(false);
+  function renderForm(msg){ setCompact(false); setWelcome(true);
     var p = S.person || load() || {};
     var opts = '<option value="">Escolha na lista</option>' + DEPTS.map(function(d){ return '<option'+(p.depto===d?' selected':'')+'>'+esc(d)+'</option>'; }).join('');
     view.innerHTML =
-      '<section class="card form-card" aria-labelledby="f-title">'+
-      '<h2 id="f-title" tabindex="-1">Antes de começar</h2>'+
-      '<form id="reg" novalidate>'+
-        '<div class="grid2">'+
-        '<div class="field"><label for="f-nome">Seu nome</label><input id="f-nome" autocomplete="name" maxlength="120" required><p class="err" id="e-nome" role="alert"></p></div>'+
-        '<div class="field"><label for="f-depto">Seu departamento</label><select id="f-depto" required>'+opts+'</select><p class="err" id="e-depto" role="alert"></p></div>'+
-        '<div class="field" id="w-outro" hidden><label for="f-outro">Qual é o departamento?</label><input id="f-outro" maxlength="60"><p class="err" id="e-outro" role="alert"></p></div>'+
-        '<div class="field"><label for="f-email">Seu e-mail</label><input id="f-email" type="email" autocomplete="email" inputmode="email" maxlength="160" required><p class="err" id="e-email" role="alert"></p></div>'+
-        '</div>'+
-        '<p class="notice">Usamos o seu nome, departamento e e-mail só para contar quantas pessoas fizeram o treinamento. Só quem coordena o treinamento vê essas informações.</p>'+
-        '<p class="err form-error" id="e-form" role="alert"></p>'+
-        '<button class="btn primary" id="go" type="submit">Começar o treinamento</button>'+
-      '</form></section>';
+      '<section class="split" aria-labelledby="f-title">'+
+      heroHTML()+
+      '<div class="form-side">'+
+        '<p class="eyebrow">Treinamento de TI</p>'+
+        '<h1 class="wtitle" id="f-title" tabindex="-1">Usar o computador com segurança</h1>'+
+        '<p class="wlead">Preencha os dados abaixo para começar. É rápido.</p>'+
+        '<form id="reg" novalidate>'+
+          '<div class="field"><label for="f-nome">Seu nome</label><div class="ig">'+IC.user+'<input id="f-nome" autocomplete="name" maxlength="120" placeholder="Nome e sobrenome" required></div><p class="err" id="e-nome" role="alert"></p></div>'+
+          '<div class="field"><label for="f-depto">Seu departamento</label><div class="ig">'+IC.dept+'<select id="f-depto" required>'+opts+'</select></div><p class="err" id="e-depto" role="alert"></p></div>'+
+          '<div class="field" id="w-outro" hidden><label for="f-outro">Qual é o departamento?</label><div class="ig">'+IC.dept+'<input id="f-outro" maxlength="60"></div><p class="err" id="e-outro" role="alert"></p></div>'+
+          '<div class="field"><label for="f-email">Seu e-mail</label><div class="ig">'+IC.mail+'<input id="f-email" type="email" autocomplete="email" inputmode="email" maxlength="160" placeholder="nome@empresa.com" required></div><p class="err" id="e-email" role="alert"></p></div>'+
+          '<p class="err form-error" id="e-form" role="alert"></p>'+
+          '<button class="wbtn" id="go" type="submit">Começar o treinamento <span aria-hidden="true">&rarr;</span></button>'+
+        '</form>'+
+        '<ul class="wnotes">'+
+          '<li>'+IC.shield+'<span>Seu nome, departamento e e-mail servem só para contar quem fez o treinamento. Só a coordenação vê.</span></li>'+
+          '<li>'+IC.clock+'<span>Leva poucos minutos. Você pode ouvir cada tela.</span></li>'+
+        '</ul>'+
+        '<p class="whelp">'+IC.phone+'<span>Precisa de ajuda? Service Desk <b>'+esc(PHONE)+'</b></span></p>'+
+        '<p class="wfoot"><span>&copy; '+new Date().getFullYear()+' Grupo Wish &middot; Treinamento interno</span><a href="#admin" id="admin-link">Área da coordenação</a></p>'+
+      '</div></section>';
     var nome = document.getElementById('f-nome'), email = document.getElementById('f-email'), depto = document.getElementById('f-depto'), outro = document.getElementById('f-outro');
     if(p.nome) nome.value = p.nome;
     if(p.email) email.value = p.email;
@@ -299,7 +377,7 @@ const DATA = {"slides":[{"kind":"cover","title":"Usar o computador com seguranç
   var ICON_S = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/></svg>';
   var HAS_TTS = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
 
-  function renderLesson(){ setCompact(true);
+  function renderLesson(){ setCompact(true); setWelcome(false);
     var s = screens[S.idx], last = S.idx === screens.length - 1;
     var pct = Math.round(((S.idx + 1) / screens.length) * 100);
     view.innerHTML =
@@ -335,7 +413,7 @@ const DATA = {"slides":[{"kind":"cover","title":"Usar o computador com seguranç
     S.speaking = true; paintListen();
     window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
   }
-  function renderDone(){ setCompact(true);
+  function renderDone(){ setCompact(true); setWelcome(false);
     var first = ((S.person && S.person.nome) || '').split(' ')[0];
     view.innerHTML =
       '<section class="card done" aria-labelledby="d-title"><h2 id="d-title" tabindex="-1">Parabéns'+(first?', '+esc(first):'')+'!</h2>'+
@@ -351,16 +429,23 @@ const DATA = {"slides":[{"kind":"cover","title":"Usar o computador com seguranç
   function storeSession(){ try{ if(S.session) sessionStorage.setItem(SKEY, JSON.stringify(S.session)); else sessionStorage.removeItem(SKEY); }catch(e){} }
   function restoreSession(){ try{ var s = JSON.parse(sessionStorage.getItem(SKEY)||'null'); if(s && s.expires_at > Date.now()) S.session = s; }catch(e){} }
 
-  function renderLogin(msg){ setCompact(true);
+  function renderLogin(msg){ setCompact(true); setWelcome(true);
     view.innerHTML =
-      '<section class="card form-card login" aria-labelledby="l-title"><h2 id="l-title" tabindex="-1">Área da coordenação</h2>'+
-      '<p class="lead">Entre com o e-mail e a senha de admin para ver quem acessou o treinamento.</p>'+
-      '<form id="adm" novalidate>'+
-        '<div class="field"><label for="a-email">E-mail</label><input id="a-email" type="email" autocomplete="username" inputmode="email"></div>'+
-        '<div class="field"><label for="a-pass">Senha</label><input id="a-pass" type="password" autocomplete="current-password"></div>'+
-        '<p class="err form-error" id="a-err" role="alert"></p>'+
-        '<div class="row" style="display:flex;gap:12px;flex-wrap:wrap"><button class="btn primary" id="a-go" type="submit">Entrar</button><button class="btn" id="a-back" type="button">Voltar ao treinamento</button></div>'+
-      '</form></section>';
+      '<section class="split" aria-labelledby="l-title">'+
+      heroHTML()+
+      '<div class="form-side">'+
+        '<p class="eyebrow">Área da coordenação</p>'+
+        '<h1 class="wtitle" id="l-title" tabindex="-1">Quem fez o treinamento</h1>'+
+        '<p class="wlead">Entre com o e-mail e a senha de admin para ver os acessos.</p>'+
+        '<form id="adm" novalidate>'+
+          '<div class="field"><label for="a-email">E-mail</label><div class="ig">'+IC.mail+'<input id="a-email" type="email" autocomplete="username" inputmode="email"></div></div>'+
+          '<div class="field"><label for="a-pass">Senha</label><div class="ig">'+IC.lock+'<input id="a-pass" type="password" autocomplete="current-password"></div></div>'+
+          '<p class="err form-error" id="a-err" role="alert"></p>'+
+          '<button class="wbtn" id="a-go" type="submit">Entrar</button>'+
+          '<button class="wlink" id="a-back" type="button">&larr; Voltar ao treinamento</button>'+
+        '</form>'+
+        '<p class="wfoot"><span>&copy; '+new Date().getFullYear()+' Grupo Wish &middot; Acesso restrito</span></p>'+
+      '</div></section>';
     if(msg) document.getElementById('a-err').textContent = msg;
     document.getElementById('a-back').addEventListener('click', function(){ location.hash = ''; });
     document.getElementById('adm').addEventListener('submit', async function(ev){
@@ -416,7 +501,7 @@ const DATA = {"slides":[{"kind":"cover","title":"Usar o computador com seguranç
     });
     S.people = Object.keys(by).map(function(k){ return by[k]; });
   }
-  function renderPanelShell(){ setCompact(true);
+  function renderPanelShell(){ setCompact(true); setWelcome(false);
     var depts = Array.from(new Set(S.people.map(function(r){ return r.departamento; }).filter(Boolean))).sort(function(a,b){ return a.localeCompare(b,'pt-BR'); });
     view.innerHTML =
       '<section class="card panel" aria-labelledby="p-title">'+
@@ -541,6 +626,13 @@ const DATA = {"slides":[{"kind":"cover","title":"Usar o computador com seguranç
     if(tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
     if(e.key === 'ArrowRight'){ go(1); } else if(e.key === 'ArrowLeft'){ go(-1); }
   });
+  var ZKEY = 'wish_treino_zoom';
+  var Z = NaN; try{ Z = parseFloat(localStorage.getItem(ZKEY)); }catch(e){}
+  if(!(Z >= 0.7 && Z <= 1.3)) Z = window.innerWidth >= 900 ? 0.82 : 1;
+  document.body.style.zoom = Z;
+  function stepZoom(d){ Z = Math.min(1.3, Math.max(0.7, Math.round((Z + d) * 100) / 100)); document.body.style.zoom = Z; try{ localStorage.setItem(ZKEY, String(Z)); }catch(e){} }
+  document.getElementById('z-down').addEventListener('click', function(){ stepZoom(-0.1); });
+  document.getElementById('z-up').addEventListener('click', function(){ stepZoom(0.1); });
   restoreSession();
   route();
 })();
